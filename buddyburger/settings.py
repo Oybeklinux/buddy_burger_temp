@@ -150,13 +150,13 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/4.0/howto/static-files/
 
 STATIC_URL = '/static/'
-STATIC_ROOT = '/static/' #os.path.join(BASE_DIR, 'static')  # deploy uchun
+STATIC_ROOT = env("STATIC_ROOT")#'/home/kannasu1/static/'#'/static/' #os.path.join(BASE_DIR, 'static')  # deploy uchun
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, 'assets'),  # debug uchun assets
 ]
 
 MEDIA_URL = '/media/'
-MEDIA_ROOT = os.path.join(BASE_DIR, 'media')  # path of uploaded files
+MEDIA_ROOT = env("MEDIA_ROOT")# os.path.join(BASE_DIR, 'media')  # path of uploaded files
 
 
 SESSION_COOKIE_SECURE = True
