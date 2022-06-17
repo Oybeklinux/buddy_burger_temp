@@ -9,11 +9,12 @@
 __pycache__/
 local_settings.py
 .env
+#db.sqlite3
 db.sqlite3-journal
 
 #papkalar
 static/
-
+#media/
 
 virtual/
 
