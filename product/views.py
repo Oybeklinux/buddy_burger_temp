@@ -25,28 +25,51 @@ class OrderFilter(FilterSet):
     end_date = DateFilter(field_name="created", lookup_expr="lte")
 
 
-class BurgerViewSet(viewsets.ModelViewSet):
+class ProductViewSet(viewsets.ModelViewSet):
     parser_classes = (JSONParser, FormParser, MultiPartParser)
-    permission_classes = [IsAuthenticatedOrReadOnly]
+    # permission_classes = [IsAuthenticatedOrReadOnly]
 
-    queryset = Burgers.objects.all().order_by('id')
-    serializer_class = BurgerSerializer
+    queryset = Products.objects.all().order_by('id')
+    serializer_class = ProductSerializer
     pagination_class = None
 
     filter_backends = [DjangoFilterBackend,
                        filters.SearchFilter, filters.OrderingFilter]
-    filterset_fields = ['category']
+    filterset_fields = ['category', 'organization']
     # @ -fts PostgreSQL o'rnatgandan keyin ishlatilsin
     search_fields = ['^name']
-    ordering_fields = ['name', 'price', 'width', 'height']
+    ordering_fields = ['name', 'price', 'organization']
 
 
 class CategoryViewSet(viewsets.ModelViewSet):
     parser_classes = (JSONParser, FormParser, MultiPartParser)
-    permission_classes = [IsAuthenticatedOrReadOnly]
+    # permission_classes = [IsAuthenticatedOrReadOnly]
+
+    filter_backends = [DjangoFilterBackend,
+                       filters.SearchFilter, filters.OrderingFilter]
+    filterset_fields = ['name']
+    search_fields = ['^name']
 
     queryset = Category.objects.all().order_by('id')
     serializer_class = CategorySerializer
+    pagination_class = None
+
+
+class OrganizationViewSet(viewsets.ModelViewSet):
+    parser_classes = (JSONParser, FormParser, MultiPartParser)
+    # permission_classes = [IsAuthenticatedOrReadOnly]
+
+    queryset = Organization.objects.all().order_by('id')
+    serializer_class = OrganizationSerializer
+    pagination_class = None
+
+
+class ImagesViewSet(viewsets.ModelViewSet):
+    parser_classes = (JSONParser, FormParser, MultiPartParser)
+    # permission_classes = [IsAuthenticatedOrReadOnly]
+
+    queryset = Images.objects.all().order_by('id')
+    serializer_class = ImagesSerializer
     pagination_class = None
 
 

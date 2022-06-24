@@ -4,8 +4,10 @@ from .views import *
 
 
 router = DefaultRouter()
-router.register("burgers", BurgerViewSet)
+router.register("products", ProductViewSet)
 router.register("categories", CategoryViewSet)
+router.register("organizations", OrganizationViewSet)
+router.register("images", ImagesViewSet)
 router.register("settings", SettingsViewSet)
 # router.register("orders", OrderViewSet)
 

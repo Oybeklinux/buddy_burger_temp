@@ -1,47 +1,81 @@
 from rest_framework import serializers
+from rest_framework.reverse import reverse
+
 from .models import *
 
 
-class BurgerSerializer(serializers.ModelSerializer):
+class ImagesSerializer(serializers.ModelSerializer):
 
     class Meta:
-        model = Burgers
+        model = Images
+        fields = '__all__'
+
+    # def to_representation(self, obj):
+    #     lst = []
+    #     for img in list(obj):
+    #         url = img[1]
+    #         request = self.context.get('request', None)
+    #         # print(request.build_absolute_uri())
+    #         if request is not None:
+    #             # print(url)
+    #             image = request.build_absolute_uri(url)
+    #             # print(image)
+    #             lst.append(image)
+    #
+    #     return lst
+    #
+
+class ProductSerializer(serializers.ModelSerializer):
+    images = ImagesSerializer(many=True)
+
+    class Meta:
+        model = Products
         fields = '__all__'
 
     def to_representation(self, obj):
-        image = None
-        if obj.image and hasattr(obj.image, 'url'):
-            url = obj.image.url
+        serializer = ImagesSerializer(obj.images, many=True)
+        datas = serializer.data
+        lst = []
+        for data in datas:
+            url = data['image']
             request = self.context.get('request', None)
             if request is not None:
-                image = request.build_absolute_uri(url)
+                url = request.build_absolute_uri(url)
+                lst.append(url)
 
         return {
             "id": obj.id,
-            "name_uz": obj.name_uz,
-            "name_en": obj.name_en,
-            "name_ru": obj.name_ru,
-            "definition_uz": obj.definition_uz,
-            "definition_en": obj.definition_en,
-            "definition_ru": obj.definition_ru,
-            "image": image,
+            "name": obj.name,
+            "info": obj.info,
+            "images": lst,
             "price": obj.price,
-            "count": 1,
             "created": obj.created,
+            "material": obj.material,
+            "color": obj.color,
             "category": {
-                "name_uz": obj.category.name_uz,
-                "name_en": obj.category.name_en,
-                "name_ru": obj.category.name_ru,
+                "name": obj.category.name,
                 "id": obj.category.id
-            } if obj.category else None
+            } if obj.category else None,
+            "organization": {
+                "name": obj.organization.name,
+                "id": obj.organization.id
+            } if obj.organization else None
         }
 
 
 class CategorySerializer(serializers.ModelSerializer):
-    burgers = BurgerSerializer(many=True)
+    products = ProductSerializer(many=True)
     
     class Meta:
         model = Category
+        fields = '__all__'
+
+
+class OrganizationSerializer(serializers.ModelSerializer):
+    products = ProductSerializer(many=True)
+
+    class Meta:
+        model = Organization
         fields = '__all__'
 
 

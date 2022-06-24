@@ -1,1 +1,1 @@
-from buddyburger.wsgi import application
+from ozbek.wsgi import application
