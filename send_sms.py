@@ -25,10 +25,10 @@ class TLSAdapter(requests.adapters.HTTPAdapter):
                 ssl_context=ctx)
 
 
-# session = requests.session()
-# session.mount('https://', TLSAdapter())
-# res = session.post(url=url,json=credentials)
-# print(res.text)
-# data = json.loads(res.text)
-# print(data['success'])
+session = requests.session()
+session.mount('https://', TLSAdapter())
+res = session.post(url=url,json=credentials)
+print(res.text)
+data = json.loads(res.text)
+print(data['success'])
 
