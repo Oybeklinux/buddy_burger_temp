@@ -10,11 +10,11 @@ from rest_framework.authtoken.models import Token
 from rest_framework.permissions import IsAuthenticated, BasePermission
 
 
-class validateOTP(APIView):
-
-    def post(self, request, *args, **kwargs):
-        phone = request.data.get('phone_number', False)
-        otp_sent = request.data.get('otp', False)
+# class validateOTP(APIView):
+#
+#     def post(self, request, *args, **kwargs):
+#         phone = request.data.get('phone_number', False)
+#         otp_sent = request.data.get('otp', False)
 
 
 @api_view(["GET"])

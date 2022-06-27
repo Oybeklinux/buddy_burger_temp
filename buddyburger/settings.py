@@ -31,12 +31,13 @@ SECRET_KEY = env("SECRET_KEY")
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['kannas.uz', 'www.kannas.uz', "127.0.0.1"]
+ALLOWED_HOSTS = ['api.buddyburger.kannas.uz', 'www.api.buddyburger.kannas.uz', "127.0.0.1"]
 CORS_ORIGIN_ALLOW_ALL = True
 
 # Application definition
 
 INSTALLED_APPS = [
+    'whitenoise.runserver_nostatic',
     'corsheaders',
     'django.contrib.admin',
     'django.contrib.auth',
@@ -150,10 +151,13 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/4.0/howto/static-files/
 
 STATIC_URL = '/static/'
-STATIC_ROOT = env("STATIC_ROOT") # deploy uchun
-STATICFILES_DIRS = [
-    os.path.join(BASE_DIR, 'assets'),  # debug uchun assets
-]
+
+if DEBUG:
+    STATICFILES_DIRS = [
+        os.path.join(BASE_DIR, 'assets'),  # debug uchun assets
+    ]
+else:
+    STATIC_ROOT = env("STATIC_ROOT") # deploy uchun
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = env("MEDIA_ROOT")# os.path.join(BASE_DIR, 'media')  # path of uploaded files
