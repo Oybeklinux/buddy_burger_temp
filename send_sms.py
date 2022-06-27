@@ -10,6 +10,10 @@ credentials = {
 	"message": "test"
 }
 
+CIPHERS = (
+    'ECDHE-RSA-AES256-GCM-SHA384:ECDHE-ECDSA-AES256-GCM-SHA384:ECDHE-RSA-AES256-SHA384:ECDHE-ECDSA-AES256-SHA384:'
+    'ECDHE-RSA-AES128-GCM-SHA256:ECDHE-RSA-AES128-SHA256:AES256-SHA'
+)
 
 class TLSAdapter(requests.adapters.HTTPAdapter):
 
@@ -25,10 +29,10 @@ class TLSAdapter(requests.adapters.HTTPAdapter):
                 ssl_context=ctx)
 
 
-# session = requests.session()
-# session.mount('https://', TLSAdapter())
-# res = session.post(url=url,json=credentials)
-# print(res.text)
-# data = json.loads(res.text)
-# print(data['success'])
+session = requests.session()
+session.mount('https://', TLSAdapter())
+res = session.post(url=url,json=credentials)
+print(res.text)
+data = json.loads(res.text)
+print(data['success'])
 
