@@ -1,10 +1,11 @@
-# DO NOT REMOVE. CLOUDLINUX PASSENGER CONFIGURATION BEGIN
-PassengerAppRoot "/home/kannasu1/api.buddyburger.kannas.uz"
-PassengerBaseURI "/"
-PassengerPython "/home/kannasu1/virtualenv/api.buddyburger.kannas.uz/3.8/bin/python"
-PassengerAppLogFile "/home/kannasu1/api_buddyburger.log"
-# DO NOT REMOVE. CLOUDLINUX PASSENGER CONFIGURATION END
 # DO NOT REMOVE OR MODIFY. CLOUDLINUX ENV VARS CONFIGURATION BEGIN
 <IfModule Litespeed>
 </IfModule>
 # DO NOT REMOVE OR MODIFY. CLOUDLINUX ENV VARS CONFIGURATION END
+
+# DO NOT REMOVE. CLOUDLINUX PASSENGER CONFIGURATION BEGIN
+PassengerAppRoot "/home/kannasu1/api.buddyburger.kannas.uz"
+PassengerBaseURI "/"
+PassengerPython "/home/kannasu1/virtualenv/api.buddyburger.kannas.uz/3.9/bin/python"
+PassengerAppLogFile "/home/kannasu1/api_buddyburger.log"
+# DO NOT REMOVE. CLOUDLINUX PASSENGER CONFIGURATION END
