@@ -160,7 +160,7 @@ else:
     STATIC_ROOT = env("STATIC_ROOT") # deploy uchun
 
 MEDIA_URL = '/media/'
-MEDIA_ROOT = env("MEDIA_ROOT")# os.path.join(BASE_DIR, 'media')  # path of uploaded files
+MEDIA_ROOT = env("MEDIA_ROOT")
 
 
 SESSION_COOKIE_SECURE = True
