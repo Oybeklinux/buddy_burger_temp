@@ -45,7 +45,7 @@ class CategoryViewSet(viewsets.ModelViewSet):
     parser_classes = (JSONParser, FormParser, MultiPartParser)
     permission_classes = [IsAuthenticatedOrReadOnly]
 
-    queryset = Category.objects.all().order_by('id')
+    queryset = Category.objects.all().order_by('order')
     serializer_class = CategorySerializer
     pagination_class = None
 
