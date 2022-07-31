@@ -197,11 +197,13 @@ def send_sms_to_login(request):
             'message': "Bunday foydalanuvchi mavjud emas. Ro'yxatdan o'ting"
         })
 
-    sms = send_otp_to_phone(phone)
+    sms, error = send_otp_to_phone(phone)
     if not sms:
         return Response({
             'status': 400,
-            'message': 'SMS yuborishda xatolik. Qayta yuboring'
+            'message': 'SMS yuborishda xatolik. Qayta yuboring',
+            'error': error
+
         })
     user.otp = sms
     user.save()

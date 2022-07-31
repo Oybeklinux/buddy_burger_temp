@@ -6,6 +6,10 @@ import requests
 from requests.adapters import HTTPAdapter
 from requests.packages.urllib3.poolmanager import PoolManager
 from requests.packages.urllib3.util import ssl_
+import logging
+
+logging.basicConfig(filename="log.txt", level=logging.DEBUG)
+logger = logging.getLogger(__name__)
 
 env = environ.Env()
 environ.Env.read_env()
@@ -42,15 +46,18 @@ def send_otp_to_phone(phone_number):
     session.mount("https://", adapter)
     try:
         response = session.request(method='POST', url=url, json=credentials)
-        print(response.text)
+        # print(response.text)
         data = json.loads(response.text)
+        logger.info(data)
         if data['success']:
-            return otp
-
-        print("Kutilmagan xatolik")
-        return None
+            return otp, None
+        else:
+            error = data['reason'] if 'reason' in data else 'Unknown error'
+            error += f" {phone_number}"
+            logger.error(error)
+            return None, error
     except Exception as exception:
-        print(exception)
-        return None
+        logger.error(exception)
+        return None, str(exception)
 
 
