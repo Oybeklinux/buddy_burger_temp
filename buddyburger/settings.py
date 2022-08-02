@@ -31,7 +31,7 @@ SECRET_KEY = env("SECRET_KEY")
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = env("DEBUG")
 
-ALLOWED_HOSTS = [env("ALLOWED_HOST1"), env("ALLOWED_HOST2"), "127.0.0.1"]
+ALLOWED_HOSTS = ["api.buddyburger.kannas.uz", "www.api.buddyburger.kannas.uz","api.buddyburger.uz", "www.api.buddyburger.uz", "127.0.0.1"]
 CORS_ORIGIN_ALLOW_ALL = True
 
 # Application definition
