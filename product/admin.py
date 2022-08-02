@@ -3,7 +3,7 @@ from .models import *
 
 
 class BurgerAdmin(admin.ModelAdmin):
-    list_display = ["name_ru", "price", "category", "created"]
+    list_display = ["name_ru", "price", "category", "created", "image"]
 
 
 class OrderAdmin(admin.ModelAdmin):
