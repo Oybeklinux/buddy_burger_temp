@@ -12,13 +12,13 @@ https://docs.djangoproject.com/en/4.0/ref/settings/
 
 from pathlib import Path
 import os
-# import django_heroku
 import environ
 import rest_framework.permissions
 
 env = environ.Env()
 # reading .env file
 environ.Env.read_env()
+
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -31,7 +31,8 @@ SECRET_KEY = env("SECRET_KEY")
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ["api.buddyburger.kannas.uz", "www.api.buddyburger.kannas.uz","api.buddyburger.uz", "www.api.buddyburger.uz", "127.0.0.1"]
+#ALLOWED_HOSTS = ['api.buddyburger.kannas.uz', 'www.api.buddyburger.kannas.uz',"api.buddyburger.uz", "www.api.buddyburger.uz", "127.0.0.1"]
+ALLOWED_HOSTS=['*']
 CORS_ORIGIN_ALLOW_ALL = True
 
 # Application definition
@@ -156,16 +157,12 @@ if DEBUG:
     STATICFILES_DIRS = [
         os.path.join(BASE_DIR, 'assets'),  # debug uchun assets
     ]
-else:
-    STATIC_ROOT = env("STATIC_ROOT") # deploy uchun
+STATIC_ROOT = env("STATIC_ROOT") # deploy uchun
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = env("MEDIA_ROOT")
 
 
-SESSION_COOKIE_SECURE = True
-CSRF_COOKIE_SECURE = True
-SECURE_SSL_REDIRECT = True
 SESSION_COOKIE_SECURE = False
 CSRF_COOKIE_SECURE = False
 SECURE_SSL_REDIRECT = False
