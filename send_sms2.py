@@ -4,6 +4,7 @@ from requests.adapters import HTTPAdapter
 from requests.packages.urllib3.poolmanager import PoolManager
 from requests.packages.urllib3.util import ssl_
 
+# ishlagan algoritmlar'AES256-SHA256', 'AES256-SHA', 'CAMELLIA256-SHA', 'AES128-GCM-SHA256', 'AES128-SHA256', 'AES128-SHA', 'CAMELLIA128-SHA'
 CIPHERS = (
     'AES256-SHA'
 )
