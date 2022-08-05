@@ -50,25 +50,3 @@ class SettingsSerializer(serializers.ModelSerializer):
         model = Settings
         fields = '__all__'
 
-
-class OrderSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Order
-        fields = '__all__'
-
-    # def to_representation(self, obj):
-    #     if not obj:
-    #         return None
-    #     return {
-    #         "id": obj.id,
-    #         "total": obj.total,
-    #         "phone": obj.phone,
-    #         "address": obj.address,
-    #         "created": obj.created,
-    #         "bottle": {
-    #             "name_uz": obj.bottle.name_uz,
-    #             "name_en": obj.bottle.name_en,
-    #             "name_ru": obj.bottle.name_ru,
-    #             "id": obj.bottle.id
-    #          }
-    #     }

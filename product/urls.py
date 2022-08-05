@@ -7,10 +7,7 @@ router = DefaultRouter()
 router.register("burgers", BurgerViewSet)
 router.register("categories", CategoryViewSet)
 router.register("settings", SettingsViewSet)
-# router.register("orders", OrderViewSet)
 
 urlpatterns = [
-    path('', include(router.urls)),
-    path('orders/', OrderList.as_view()),
-    path('orders/<int:pk>/', OrderDetail.as_view()),
+    path('', include(router.urls))
 ]

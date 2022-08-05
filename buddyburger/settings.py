@@ -51,7 +51,8 @@ INSTALLED_APPS = [
     'django_filters',
     'drf_yasg',
     'product.apps.ProductConfig',
-    'account.apps.AccountConfig'
+    'account.apps.AccountConfig',
+    'orders.apps.OrdersConfig'
 ]
 AUTH_USER_MODEL = 'account.User'
 MIDDLEWARE = [

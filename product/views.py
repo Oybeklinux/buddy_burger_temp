@@ -18,13 +18,6 @@ from rest_framework.permissions import IsAuthenticatedOrReadOnly
 # sana va sonni ikki oraliq bo'yicha qidirish
 
 
-class OrderFilter(FilterSet):
-    min_price = NumberFilter(field_name="total", lookup_expr="gte")
-    max_price = NumberFilter(field_name="total", lookup_expr="lte")
-    start_date = DateFilter(field_name="created", lookup_expr="gte")
-    end_date = DateFilter(field_name="created", lookup_expr="lte")
-
-
 class BurgerViewSet(viewsets.ModelViewSet):
     parser_classes = (JSONParser, FormParser, MultiPartParser)
     permission_classes = [IsAuthenticatedOrReadOnly]
@@ -55,21 +48,3 @@ class SettingsViewSet(viewsets.ModelViewSet):
     serializer_class = SettingsSerializer
     permission_classes = [IsAuthenticatedOrReadOnly]
     pagination_class = None
-
-
-class OrderList(generics.ListCreateAPIView):
-    serializer_class = OrderSerializer
-    permission_classes = [IsAuthenticatedOrReadOnly]
-    pagination_class = PageNumberPagination
-    queryset = Order.objects.filter()
-    filter_backends = [DjangoFilterBackend,
-                       filters.SearchFilter, filters.OrderingFilter]
-    filterset_class = OrderFilter
-    search_fields = ['^phone']
-    ordering_fields = ['created']
-
-
-class OrderDetail(generics.RetrieveUpdateDestroyAPIView):
-    queryset = Order.objects.all()
-    serializer_class = OrderSerializer
-    permission_classes = [IsAuthenticatedOrReadOnly]
