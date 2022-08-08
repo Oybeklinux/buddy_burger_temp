@@ -26,6 +26,7 @@ class Orders(models.Model):
     dom = models.CharField(max_length=30, null=True, blank=True)
     kvartira = models.CharField(max_length=30, null=True, blank=True)
     location = models.CharField(max_length=200, null=True, blank=True)
+    comment = models.TextField(blank=True, null=True)
     filial = models.ForeignKey("Filial", on_delete=models.SET_NULL, null=True)
 
     def __str__(self):
