@@ -52,9 +52,9 @@ def send_otp_to_phone(phone_number):
         if 'error' in data[0]:
             error = str(data[0])
             logger.error(error)
-            return False, error
+            return None, error
         else:
-            return True, None
+            return otp, None
     except Exception as exception:
         logger.error(exception)
         return None, str(exception)
