@@ -35,12 +35,14 @@ class TlsAdapter(HTTPAdapter):
 
 def send_otp_to_phone(phone_number):
     otp = random.randint(100000, 999999)
-    url = 'https://api.smsfly.uz/'
+
     credentials = {
-        "key": env("token"),
-        "phone": str(phone_number),
-        "message": str(otp)
+        "login": env('login'),
+        "password": env('password'),
+        "data": json.dumps([{"phone": str(phone_number), "text": str(otp)}])
     }
+    url = env('url_swg')
+
     session = requests.session()
     adapter = TlsAdapter(ssl.OP_NO_SSLv2)
     session.mount("https://", adapter)
