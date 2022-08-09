@@ -35,13 +35,22 @@ class TlsAdapter(HTTPAdapter):
 
 def send_otp_to_phone(phone_number):
     otp = random.randint(100000, 999999)
+    if env('smsgateway') == '1':
 
-    credentials = {
-        "login": env('login'),
-        "password": env('password'),
-        "data": json.dumps([{"phone": str(phone_number), "text": str(otp)}])
-    }
-    url = env('url_swg')
+        credentials = {
+            "login": env('login'),
+            "password": env('password'),
+            "data": json.dumps([{"phone": str(phone_number), "text": str(otp)}])
+        }
+        url = env('url_swg')
+    else:
+        credentials = {
+            "key": env("token"),
+            "phone": str(phone_number),
+            "message": str(otp)
+        }
+        url = env('url')
+
     session = requests.session()
     adapter = TlsAdapter(ssl.OP_NO_SSLv2)
     session.mount("https://", adapter)
@@ -49,12 +58,22 @@ def send_otp_to_phone(phone_number):
         response = session.request(method='POST', url=url, json=credentials)
         data = json.loads(response.text)
         logger.info(data)
-        if 'error' in data[0]:
-            error = str(data[0])
-            logger.error(error)
-            return None, error
+        if env('smsgateway') != '1':
+            if data['success']:
+                return True, None
+            else:
+                error = data['reason'] if 'reason' in data else 'Unknown error'
+                error += f" {phone_number}"
+                logger.error(error)
+                return False, error
         else:
-            return otp, None
+
+            if 'error' in data[0]:
+                error = str(data[0])
+                logger.error(error)
+                return None, error
+            else:
+                return otp, None
     except Exception as exception:
         logger.error(exception)
         return None, str(exception)
