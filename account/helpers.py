@@ -60,7 +60,7 @@ def send_otp_to_phone(phone_number):
         logger.info(data)
         if env('smsgateway') != '1':
             if data['success']:
-                return True, None
+                return otp, None
             else:
                 error = data['reason'] if 'reason' in data else 'Unknown error'
                 error += f" {phone_number}"
