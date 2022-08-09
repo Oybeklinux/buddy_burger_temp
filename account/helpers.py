@@ -42,22 +42,19 @@ def send_otp_to_phone(phone_number):
         "data": json.dumps([{"phone": str(phone_number), "text": str(otp)}])
     }
     url = env('url_swg')
-
     session = requests.session()
     adapter = TlsAdapter(ssl.OP_NO_SSLv2)
     session.mount("https://", adapter)
     try:
         response = session.request(method='POST', url=url, json=credentials)
-        # print(response.text)
         data = json.loads(response.text)
         logger.info(data)
-        if data['success']:
-            return otp, None
-        else:
-            error = data['reason'] if 'reason' in data else 'Unknown error'
-            error += f" {phone_number}"
+        if 'error' in data[0]:
+            error = str(data[0])
             logger.error(error)
-            return None, error
+            return False, error
+        else:
+            return True, None
     except Exception as exception:
         logger.error(exception)
         return None, str(exception)
