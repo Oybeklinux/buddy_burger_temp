@@ -31,7 +31,9 @@ class OrdersViewSet(viewsets.ModelViewSet):
                 detail_serializer = OrderDetailSerializer(data=order_details, many=True)
                 if detail_serializer.is_valid():
                     detail_serializer.save()
-                    return Response(serializer.data, status=status.HTTP_201_CREATED)
+                    data = serializer.data
+                    data['order_details'] = detail_serializer.data
+                    return Response(data, status=status.HTTP_201_CREATED)
                 else:
                     return Response(detail_serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
