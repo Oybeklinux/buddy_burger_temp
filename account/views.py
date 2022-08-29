@@ -8,7 +8,7 @@ from rest_framework.views import APIView
 from django.contrib.auth import authenticate, login, logout
 from rest_framework.authtoken.models import Token
 from rest_framework.permissions import IsAuthenticated, BasePermission
-
+from django.conf import settings
 
 # class validateOTP(APIView):
 #
@@ -153,7 +153,7 @@ def register_user(request):
             phone_number=phone,
             password=password,
             first_name=full_name,
-            otp=sms
+            otp=sms if settings.DEBUG else None
         )
 
     except Exception as e:
@@ -166,7 +166,7 @@ def register_user(request):
         'status': 200,
         'message': 'SMS yuborildi',
         'user_id': user.id,
-        'sms': sms,
+        'otp': sms if settings.DEBUG else None,
         "is_admin": user.is_staff,
         "phone": phone,
         "user_name": full_name
