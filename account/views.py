@@ -142,11 +142,12 @@ def register_user(request):
         })
 
     try:
-        sms = send_otp_to_phone(phone)
-        if not sms:
+        sms, error = send_otp_to_phone(phone)
+        if error:
             return Response({
                 'status': 400,
-                'message': 'SMS yuborishda xatolik. Qayta yuboring'
+                'message': 'SMS yuborishda xatolik. Qayta yuboring',
+                'detail': str(error)
             })
         user = User.objects.create(
             phone_number=phone,

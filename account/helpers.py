@@ -7,6 +7,7 @@ from requests.adapters import HTTPAdapter
 from requests.packages.urllib3.poolmanager import PoolManager
 from requests.packages.urllib3.util import ssl_
 import logging
+from django.conf import settings
 
 logging.basicConfig(filename="log.txt", level=logging.DEBUG)
 logger = logging.getLogger(__name__)
@@ -35,21 +36,21 @@ class TlsAdapter(HTTPAdapter):
 
 def send_otp_to_phone(phone_number):
     otp = random.randint(100000, 999999)
-    if env('smsgateway') == '1':
-
-        credentials = {
-            "login": env('login'),
-            "password": env('password'),
-            "data": json.dumps([{"phone": str(phone_number), "text": str(otp)}])
-        }
-        url = env('url_swg')
-    else:
+    if settings.DEBUG:
         credentials = {
             "key": env("token"),
             "phone": str(phone_number),
             "message": str(otp)
         }
         url = env('url')
+    else:
+        credentials = {
+            "login": env('login'),
+            "password": env('password'),
+            "data": json.dumps([{"phone": str(phone_number), "text": str(otp)}])
+        }
+        url = env('url_swg')
+
 
     session = requests.session()
     adapter = TlsAdapter(ssl.OP_NO_SSLv2)
@@ -58,7 +59,7 @@ def send_otp_to_phone(phone_number):
         response = session.request(method='POST', url=url, json=credentials)
         data = json.loads(response.text)
         logger.info(data)
-        if env('smsgateway') != '1':
+        if settings.DEBUG:
             if data['success']:
                 return otp, None
             else:
@@ -67,7 +68,6 @@ def send_otp_to_phone(phone_number):
                 logger.error(error)
                 return False, error
         else:
-
             if 'error' in data[0]:
                 error = str(data[0])
                 logger.error(error)
@@ -76,6 +76,6 @@ def send_otp_to_phone(phone_number):
                 return otp, None
     except Exception as exception:
         logger.error(exception)
-        return None, str(exception)
+    return None, str(exception)
 
 
