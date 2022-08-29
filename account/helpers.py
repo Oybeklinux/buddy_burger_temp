@@ -47,7 +47,7 @@ def send_otp_to_phone(phone_number):
         credentials = {
             "login": env('login'),
             "password": env('password'),
-            "data": json.dumps([{"phone": str(phone_number), "text": str(otp)}])
+            "data": json.dumps([{"phone": str(phone_number), "text": f"Код подтверждения {otp}"}])
         }
         url = env('url_swg')
 
