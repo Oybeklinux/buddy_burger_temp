@@ -159,7 +159,8 @@ def register_user(request):
     except Exception as e:
         return Response({
             'status': 400,
-            'message': 'Foydalanuvchi yaratishda xatolik yuz berdi'
+            'message': 'Foydalanuvchi yaratishda xatolik yuz berdi',
+            "detail": str(e)
         })
 
     return Response({
