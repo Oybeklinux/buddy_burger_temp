@@ -153,7 +153,7 @@ def register_user(request):
             phone_number=phone,
             password=password,
             first_name=full_name,
-            otp=sms if settings.DEBUG else None
+            otp=sms
         )
 
     except Exception as e:
@@ -213,5 +213,5 @@ def send_sms_to_login(request):
         'status': 200,
         'message': 'SMS yuborildi',
         'user_id': user.id,
-        'sms': sms
+        'otp': sms if settings.DEBUG else None
     })
